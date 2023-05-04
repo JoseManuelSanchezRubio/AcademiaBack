@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Unit;
+use App\Models\Professor;
 
 class Course extends Model
 {
@@ -13,5 +15,13 @@ class Course extends Model
 
     public function users(){
         return $this->belongsToMany(User::class, 'user_course');
+    }
+
+    public function professor(){
+        return $this->belongsTo(Professor::class);
+    }
+
+    public function units(){
+        return $this->hasMany(Unit::class);
     }
 }

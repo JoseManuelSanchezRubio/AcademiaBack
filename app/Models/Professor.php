@@ -8,19 +8,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Course;
-use App\Models\Message;
 
-class User extends Authenticatable
+class Professor extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $table='users';
+    protected $table='professors';
+    protected $guard='professor';
 
     public function courses(){
-        return $this->belongsToMany(Course::class, 'user_course');
-    }
-    public function messages(){
-        return $this->hasMany(Message::class);
+        return $this->hasMany(Course::class);
     }
 
     /**

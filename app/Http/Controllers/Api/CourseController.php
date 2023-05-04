@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\Professor;
 use Illuminate\Http\Request;
+use DB;
 
 class CourseController extends Controller
 {
@@ -14,7 +16,17 @@ class CourseController extends Controller
     public function index()
     {
         $courses=Course::get();
-        return $courses;
+        $array=[];
+        foreach($courses as $course){
+            $array[]=[
+                'id'=>$course->id,
+                'name'=>$course->name,
+                'theory'=>$course->theory,
+                'exercises'=>$course->exercises,
+                'units'=>$course->units,
+            ];
+        }
+        return response()->json($array);
     }
 
     /**
@@ -22,7 +34,21 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $courses=Course::get();
+
+        foreach($courses as $_course){
+            if($_course->name == $request->name){
+                return response()->json(['status'=>false, 'message'=>'El nombre ya existe en la base de datos']);
+            }
+        }
+
+        $professor = Professor::findOrFail($request->professor_id);
+        $course = new Course();
+        $course->name=$request->name;
+        $course->professor()->associate($professor);
+        $course->save();
+
+        return response()->json(['status'=>true, 'course'=>$course]);
     }
 
     /**
@@ -30,7 +56,16 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        return $course;
+        $array=[];
+        $array[]=[
+            'id'=>$course->id,
+            'name'=>$course->name,
+            'theory'=>$course->theory,
+            'exercises'=>$course->exercises,
+            'units'=>$course->units,
+        ];
+
+        return response()->json($array);
     }
 
     /**
