@@ -24,6 +24,7 @@ class CourseController extends Controller
                 'theory'=>$course->theory,
                 'exercises'=>$course->exercises,
                 'units'=>$course->units,
+                'users'=>$course->users,
             ];
         }
         return response()->json($array);
@@ -63,6 +64,7 @@ class CourseController extends Controller
             'theory'=>$course->theory,
             'exercises'=>$course->exercises,
             'units'=>$course->units,
+            'users'=>$course->users,
         ];
 
         return response()->json($array);

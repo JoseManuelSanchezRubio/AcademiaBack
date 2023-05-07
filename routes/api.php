@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\ProfessorController;
 use App\Http\Controllers\Api\UnitController;
 use App\Http\Controllers\Api\MessageController;
+use App\Http\Controllers\Api\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,10 @@ Route::get('/unitsByCourse/{courseId}',[UnitController::class, 'getUnitsByCourse
 //Message Routes
 Route::apiResource('messages', MessageController::class);
 Route::post('/messages/forum',[MessageController::class, 'getMessagesByForum']);
+
+//Event Routes
+Route::apiResource('events', EventController::class);
+Route::post('/events/user',[EventController::class, 'getEventsByUser']);
 
 
 

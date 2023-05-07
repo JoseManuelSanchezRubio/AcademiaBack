@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Course;
 use App\Models\Message;
+use App\Models\Event;
 
 class User extends Authenticatable
 {
@@ -21,6 +22,9 @@ class User extends Authenticatable
     }
     public function messages(){
         return $this->hasMany(Message::class);
+    }
+    public function events(){
+        return $this->hasMany(Event::class);
     }
 
     /**

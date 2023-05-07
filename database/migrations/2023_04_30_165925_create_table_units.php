@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->string('description')->nullable();
             $table->string('theory');
             $table->string('exercises');
+            $table->string('user_data')->nullable();
             $table->integer('course_id');
             $table->integer('forum_id')->nullable(); //de momento null
             $table->timestamps();
