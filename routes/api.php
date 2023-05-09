@@ -49,7 +49,8 @@ Route::post('/courses/users',[CourseController::class, 'users']);
 
 //Unit Routes
 Route::apiResource('units', UnitController::class);
-Route::get('/unitsByCourse/{courseId}',[UnitController::class, 'getUnitsByCourse']); //borrar¿?
+Route::post('/uploadsByUser',[UnitController::class, 'getUploadsByUser']);
+Route::post('/postUpload',[UnitController::class, 'postUpload']);
 
 //Message Routes
 Route::apiResource('messages', MessageController::class);
@@ -58,6 +59,8 @@ Route::post('/messages/forum',[MessageController::class, 'getMessagesByForum']);
 //Event Routes
 Route::apiResource('events', EventController::class);
 Route::post('/events/user',[EventController::class, 'getEventsByUser']);
+
+
 
 
 

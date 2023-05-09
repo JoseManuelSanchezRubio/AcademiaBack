@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Unit;
 use App\Models\Course;
 use App\Models\Forum;
+use App\Models\UserUpload;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UnitController extends Controller
@@ -73,8 +75,32 @@ class UnitController extends Controller
         //
     }
 
-    public function getUnitsByCourse(Course $course){
-        $units=$course->units;
-        return response()->json($course);
+    public function postUpload(Request $request){
+        $userUpload = new UserUpload();
+        $user = User::findOrFail($request->user_id);
+        $unit = Unit::findOrFail($request->unit_id);
+
+        $userUpload->user()->associate($user);
+        $userUpload->unit()->associate($unit);
+        $userUpload->content=$request->content;
+
+        $userUpload->save();
+
+        return $userUpload;
+    }
+    public function getUploadsByUser(Request $request){
+        $uploads = UserUpload::get();
+        $array=[];
+        foreach($uploads as $upload){
+            if($upload->user_id == $request->user_id){
+                $array[]=[
+                    'id'=>$upload->id,
+                    'user'=>$upload->user,
+                    'unit'=>$upload->unit,
+                    'content'=>$upload->content
+                ];
+            }
+        }
+        return $array;
     }
 }

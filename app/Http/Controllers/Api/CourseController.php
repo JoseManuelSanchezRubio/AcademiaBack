@@ -67,6 +67,11 @@ class CourseController extends Controller
             'users'=>$course->users,
         ];
 
+        /* foreach($course->units as $unit){
+
+        } */
+
+
         return response()->json($array);
     }
 

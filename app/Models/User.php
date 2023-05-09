@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Course;
 use App\Models\Message;
 use App\Models\Event;
+use App\Models\UserUpload;
 
 class User extends Authenticatable
 {
@@ -25,6 +26,9 @@ class User extends Authenticatable
     }
     public function events(){
         return $this->hasMany(Event::class);
+    }
+    public function uploads(){
+        return $this->hasMany(UserUpload::class);
     }
 
     /**

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('theory');
             $table->string('exercises');
-            $table->string('user_data')->nullable();
+            $table->string('users_data')->nullable();
             $table->integer('course_id');
             $table->integer('forum_id')->nullable(); //de momento null
             $table->timestamps();
