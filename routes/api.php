@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ProfessorController;
 use App\Http\Controllers\Api\UnitController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\AnnouncementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,10 @@ Route::post('/messages/forum',[MessageController::class, 'getMessagesByForum']);
 //Event Routes
 Route::apiResource('events', EventController::class);
 Route::post('/events/user',[EventController::class, 'getEventsByUser']);
+
+//Announcement Routes
+Route::apiResource('announcements', AnnouncementController::class);
+Route::post('/announcements/course',[AnnouncementController::class, 'getAnnouncementsByCourse']);
 
 
 

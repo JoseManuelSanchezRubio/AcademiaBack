@@ -21,10 +21,12 @@ class CourseController extends Controller
             $array[]=[
                 'id'=>$course->id,
                 'name'=>$course->name,
+                'description'=>$course->description,
                 'theory'=>$course->theory,
                 'exercises'=>$course->exercises,
                 'units'=>$course->units,
                 'users'=>$course->users,
+                'professor'=>$course->professor
             ];
         }
         return response()->json($array);
@@ -46,6 +48,7 @@ class CourseController extends Controller
         $professor = Professor::findOrFail($request->professor_id);
         $course = new Course();
         $course->name=$request->name;
+        $course->description=$request->description;
         $course->professor()->associate($professor);
         $course->save();
 
@@ -61,6 +64,7 @@ class CourseController extends Controller
         $array[]=[
             'id'=>$course->id,
             'name'=>$course->name,
+            'description'=>$course->description,
             'theory'=>$course->theory,
             'exercises'=>$course->exercises,
             'units'=>$course->units,
@@ -88,7 +92,7 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+        Course::findOrFail($course->id)->delete();
     }
 
     public function users(Request $request){

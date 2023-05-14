@@ -31,6 +31,7 @@ class UnitController extends Controller
         $unit = new Unit();
 
         $unit->name = $request->name;
+        $unit->description = $request->description;
         $unit->theory = $request->theory;
         $unit->exercises = $request->exercises;
         $course = Course::findOrFail($request->course_id);

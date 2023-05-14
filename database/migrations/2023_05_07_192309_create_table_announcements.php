@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('body');
+            $table->integer('professor_id');
+            $table->integer('course_id');
             $table->timestamps();
         });
     }

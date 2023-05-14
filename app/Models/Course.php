@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Unit;
 use App\Models\Professor;
+use App\Models\Announcement;
 
 class Course extends Model
 {
@@ -23,5 +24,8 @@ class Course extends Model
 
     public function units(){
         return $this->hasMany(Unit::class);
+    }
+    public function announcements(){
+        return $this->hasMany(Announcement::class);
     }
 }
