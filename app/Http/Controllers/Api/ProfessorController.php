@@ -84,13 +84,14 @@ class ProfessorController extends Controller
      */
     public function update(Request $request, Professor $professor)
     {
-        $professor->name=$request->name;
-        $professor->surname=$request->surname;
-        $professor->dni=$request->dni;
-        $professor->address=$request->address;
-        $professor->phone=$request->phone;
-        $professor->email=$request->email;
-        $professor->password=Hash::make($request->password);
+        if($request->name) $professor->name=$request->name;
+        if($request->surname) $professor->surname=$request->surname;
+        //if($request->dni) $professor->dni=$request->dni;
+        if($request->address) $professor->address=$request->address;
+        if($request->phone) $professor->phone=$request->phone;
+        if($request->email) $professor->email=$request->email;
+        if($request->password) $professor->password=Hash::make($request->password);
+
         $professor->save();
 
         return response()->json($professor);

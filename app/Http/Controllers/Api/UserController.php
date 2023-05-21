@@ -84,13 +84,14 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->name=$request->name;
-        $user->surname=$request->surname;
-        $user->dni=$request->dni;
-        $user->address=$request->address;
-        $user->phone=$request->phone;
-        $user->email=$request->email;
-        $user->password=Hash::make($request->password);
+        if($request->name) $user->name=$request->name;
+        if($request->surname) $user->surname=$request->surname;
+        //if($request->dni) $user->dni=$request->dni;
+        if($request->address) $user->address=$request->address;
+        if($request->phone) $user->phone=$request->phone;
+        if($request->email) $user->email=$request->email;
+        if($request->password) $user->password=Hash::make($request->password);
+
         $user->save();
 
         return response()->json($user);
@@ -101,8 +102,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
-        return response()->json($user);
+        User::findOrFail($user->id)->delete();
     }
 
     public function attach(Request $request){

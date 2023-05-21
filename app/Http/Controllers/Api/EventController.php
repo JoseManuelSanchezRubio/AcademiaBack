@@ -46,7 +46,15 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        //
+        if($request->title) $event->title=$request->title;
+        if($request->description) $event->description=$request->description;
+        if($request->start_date) $event->start_date=$request->start_date;
+        if($request->end_date) $event->end_date=$request->end_date;
+
+
+        $event->save();
+
+        return response()->json($event);
     }
 
     /**
