@@ -36,10 +36,11 @@ Route::post('users/login',[UserController::class, 'login']);
 
 Route::post('/users/course',[UserController::class, 'attach']);
 Route::post('/users/course/detach',[UserController::class, 'detach']);
+Route::post('/users/forgottenPasswordValidation',[UserController::class, 'forgottenPasswordValidation']);
 
 
 //Professor Routes
-Route::apiResource('professors', ProfessorController::class);
+Route::apiResource('professors', ProfessorController::class)/* ->middleware(Authenticate::class) */;
 Route::post('professors/login',[ProfessorController::class, 'login']);
 
 

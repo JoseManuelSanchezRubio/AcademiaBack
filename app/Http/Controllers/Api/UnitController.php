@@ -9,6 +9,7 @@ use App\Models\Forum;
 use App\Models\UserUpload;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UnitController extends Controller
 {
@@ -25,8 +26,19 @@ class UnitController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) //verificar que no se repita el nombre; añadir el foro
+    public function store(Request $request) //verificar que no se repita el nombre
     {
+        $base64=$request->theory_file;
+        $data=substr($base64, strpos($base64, ',')+1);
+        $data=base64_decode($data);
+        Storage::disk('public')->put($request->theory, $data);
+
+        $base64=$request->exercises_file;
+        $data=substr($base64, strpos($base64, ',')+1);
+        $data=base64_decode($data);
+        Storage::disk('public')->put($request->exercises, $data);
+
+
         $forum = new Forum();
         $unit = new Unit();
 
@@ -81,9 +93,14 @@ class UnitController extends Controller
         $user = User::findOrFail($request->user_id);
         $unit = Unit::findOrFail($request->unit_id);
 
+        $base64=$request->file;
+        $data=substr($base64, strpos($base64, ',')+1);
+        $data=base64_decode($data);
+        Storage::disk('public')->put($request->file_name, $data);
+
         $userUpload->user()->associate($user);
         $userUpload->unit()->associate($unit);
-        $userUpload->content=$request->content;
+        $userUpload->file_name=$request->file_name;
 
         $userUpload->save();
 
@@ -98,7 +115,7 @@ class UnitController extends Controller
                     'id'=>$upload->id,
                     'user'=>$upload->user,
                     'unit'=>$upload->unit,
-                    'content'=>$upload->content
+                    'file_name'=>$upload->file_name
                 ];
             }
         }

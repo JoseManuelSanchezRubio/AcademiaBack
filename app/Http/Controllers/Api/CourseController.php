@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Professor;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -23,7 +24,9 @@ class CourseController extends Controller
                 'name'=>$course->name,
                 'description'=>$course->description,
                 'theory'=>$course->theory,
+                'theory_link'=>Storage::url($course->theory),
                 'exercises'=>$course->exercises,
+                'exercises_link'=>Storage::url($course->exercises),
                 'units'=>$course->units,
                 'users'=>$course->users,
                 'professor'=>$course->professor

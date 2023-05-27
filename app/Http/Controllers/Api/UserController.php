@@ -140,4 +140,27 @@ class UserController extends Controller
 
 
     }
+    public function forgottenPasswordValidation(Request $request){
+
+        $user=null;
+        foreach (User::all() as $_user) {
+            if($_user->email == $request->email){
+                $user=$_user;
+            }
+        }
+
+        if($user == null) return response()->json([
+            'status' => false,
+            'msg' => "El email no se encuentra en la base de datos"
+        ]);
+        if($user->dni != $request->dni) return response()->json([
+            'status' => false,
+            'msg' => "El DNI no corresponde con el email introducido"
+        ]);
+        return response()->json([
+            'status' => true,
+            'msg' => "",
+            'user_id' => $user->id
+        ]);
+    }
 }
