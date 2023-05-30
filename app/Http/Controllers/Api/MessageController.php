@@ -67,7 +67,8 @@ class MessageController extends Controller
                     'id'=>$message->id,
                     'body'=>$message->body,
                     'user_id'=>$message->user_id,
-                    'user'=>$message->user
+                    'user'=>$message->user,
+                    'created_at'=>$message->created_at
                 ];
 
             }
