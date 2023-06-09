@@ -69,7 +69,8 @@ class AnnouncementController extends Controller
                 $array[]=[
                     'id'=>$announcement->id,
                     'title'=>$announcement->title,
-                    'body'=>$announcement->body
+                    'body'=>$announcement->body,
+                    'created_at'=>$announcement->created_at
                 ];
 
             }

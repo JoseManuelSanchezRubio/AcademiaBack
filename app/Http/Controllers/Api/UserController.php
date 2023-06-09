@@ -59,7 +59,6 @@ class UserController extends Controller
         $user->phone=$request->phone;
         $user->email=$request->email;
         $user->password=Hash::make($request->password);
-        $user->role='0';
         $user->save();
 
         $token=$user->createToken('auth_token')->plainTextToken;
@@ -103,6 +102,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         User::findOrFail($user->id)->delete();
+        return User::get();
     }
 
     public function attach(Request $request){

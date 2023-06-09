@@ -23,6 +23,7 @@ class CourseController extends Controller
                 'id'=>$course->id,
                 'name'=>$course->name,
                 'description'=>$course->description,
+                'price'=>$course->price,
                 'theory'=>$course->theory,
                 'theory_link'=>Storage::url($course->theory),
                 'exercises'=>$course->exercises,
@@ -52,6 +53,7 @@ class CourseController extends Controller
         $course = new Course();
         $course->name=$request->name;
         $course->description=$request->description;
+        $course->price=$request->price;
         $course->professor()->associate($professor);
         $course->save();
 
@@ -68,6 +70,7 @@ class CourseController extends Controller
             'id'=>$course->id,
             'name'=>$course->name,
             'description'=>$course->description,
+            'price'=>$course->price,
             'theory'=>$course->theory,
             'exercises'=>$course->exercises,
             'units'=>$course->units,
@@ -96,6 +99,24 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         Course::findOrFail($course->id)->delete();
+        $courses=Course::get();
+        $array=[];
+        foreach($courses as $course){
+            $array[]=[
+                'id'=>$course->id,
+                'name'=>$course->name,
+                'description'=>$course->description,
+                'price'=>$course->price,
+                'theory'=>$course->theory,
+                'theory_link'=>Storage::url($course->theory),
+                'exercises'=>$course->exercises,
+                'exercises_link'=>Storage::url($course->exercises),
+                'units'=>$course->units,
+                'users'=>$course->users,
+                'professor'=>$course->professor
+            ];
+        }
+        return response()->json($array);
     }
 
     public function users(Request $request){

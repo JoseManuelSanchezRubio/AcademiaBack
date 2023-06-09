@@ -51,8 +51,9 @@ Route::post('/courses/users',[CourseController::class, 'users']);
 
 //Unit Routes
 Route::apiResource('units', UnitController::class);
-Route::post('/uploadsByUser',[UnitController::class, 'getUploadsByUser']);
+Route::post('/getUploadsByUnit',[UnitController::class, 'getUploadsByUnit']);
 Route::post('/postUpload',[UnitController::class, 'postUpload']);
+Route::post('/deleteUnit',[UnitController::class, 'deleteUnit']);
 
 //Message Routes
 Route::apiResource('messages', MessageController::class);
@@ -61,6 +62,7 @@ Route::post('/messages/forum',[MessageController::class, 'getMessagesByForum']);
 //Event Routes
 Route::apiResource('events', EventController::class);
 Route::post('/events/user',[EventController::class, 'getEventsByUser']);
+Route::post('/deleteEvent',[EventController::class, 'deleteEvent']);
 
 //Announcement Routes
 Route::apiResource('announcements', AnnouncementController::class);

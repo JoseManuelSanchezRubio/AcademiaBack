@@ -61,7 +61,20 @@ class UnitController extends Controller
 
         $forum->save();
 
-        return $unit;
+
+        $array=[];
+        $array[]=[
+            'id'=>$course->id,
+            'name'=>$course->name,
+            'description'=>$course->description,
+            'price'=>$course->price,
+            'theory'=>$course->theory,
+            'exercises'=>$course->exercises,
+            'units'=>$course->units,
+            'users'=>$course->users,
+        ];
+
+        return $array;
     }
 
     /**
@@ -106,19 +119,37 @@ class UnitController extends Controller
 
         return $userUpload;
     }
-    public function getUploadsByUser(Request $request){
+    public function getUploadsByUnit(Request $request){
         $uploads = UserUpload::get();
         $array=[];
         foreach($uploads as $upload){
-            if($upload->user_id == $request->user_id){
+            if($upload->unit_id == $request->unit_id){
                 $array[]=[
                     'id'=>$upload->id,
                     'user'=>$upload->user,
                     'unit'=>$upload->unit,
-                    'file_name'=>$upload->file_name
+                    'file_name'=>$upload->file_name,
+                    'created_at'=>$upload->created_at
                 ];
             }
         }
+        return $array;
+    }
+    public function deleteUnit(Request $request){
+        Unit::findOrFail($request->unit_id)->delete();
+        $course = Course::findOrFail($request->course_id);
+        $array=[];
+        $array[]=[
+            'id'=>$course->id,
+            'name'=>$course->name,
+            'description'=>$course->description,
+            'price'=>$course->price,
+            'theory'=>$course->theory,
+            'exercises'=>$course->exercises,
+            'units'=>$course->units,
+            'users'=>$course->users,
+        ];
+
         return $array;
     }
 }

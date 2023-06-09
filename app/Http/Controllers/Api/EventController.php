@@ -30,7 +30,23 @@ class EventController extends Controller
         $user = User::findOrFail($request->user_id);
         $event->user()->associate($user);
         $event->save();
-        return $event;
+
+        $events=Event::get();
+
+        $array=[];
+        foreach($events as $event){
+            if($event->user_id == $request->user_id){
+                $array[]=[
+                    'id'=>$event->id,
+                    'title'=>$event->title,
+                    'description'=>$event->description,
+                    'start_date'=>$event->start_date,
+                    'end_date'=>$event->end_date
+                ];
+
+            }
+        }
+        return response()->json($array);
     }
 
     /**
@@ -60,10 +76,27 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Event $event)
+    public function deleteEvent(Request $request)
     {
+        $event = Event::findOrFail($request->event_id);
         $event->delete();
-        return response()->json($event);
+
+        $events=Event::get();
+
+        $array=[];
+        foreach($events as $event){
+            if($event->user_id == $request->user_id){
+                $array[]=[
+                    'id'=>$event->id,
+                    'title'=>$event->title,
+                    'description'=>$event->description,
+                    'start_date'=>$event->start_date,
+                    'end_date'=>$event->end_date
+                ];
+
+            }
+        }
+        return response()->json($array);
     }
 
     public function getEventsByUser(Request $request){

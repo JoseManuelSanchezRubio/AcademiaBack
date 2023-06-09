@@ -30,7 +30,23 @@ class MessageController extends Controller
         $user = User::findOrFail($request->user_id);
         $message->user()->associate($user);
         $message->save();
-        return $message;
+
+        $messages=Message::get();
+
+        $array=[];
+        foreach($messages as $message){
+            if($message->forum_id == $request->forum_id){
+                $array[]=[
+                    'id'=>$message->id,
+                    'body'=>$message->body,
+                    'user_id'=>$message->user_id,
+                    'user'=>$message->user,
+                    'created_at'=>$message->created_at
+                ];
+
+            }
+        }
+        return response()->json($array);
     }
 
     /**

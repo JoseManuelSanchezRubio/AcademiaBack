@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
+            $table->float('price');
             $table->integer('professor_id');
             $table->timestamps();
         });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Professor;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -59,7 +60,6 @@ class ProfessorController extends Controller
         $professor->phone=$request->phone;
         $professor->email=$request->email;
         $professor->password=Hash::make($request->password);
-        $professor->role='1';
         $professor->save();
 
         $token=$professor->createToken('auth_token')->plainTextToken;
@@ -102,8 +102,30 @@ class ProfessorController extends Controller
      */
     public function destroy(Professor $professor)
     {
+        $courses=Course::all();
+        foreach ($courses as $course){
+            if($course->professor_id == $professor->id){
+                $course->delete();
+            }
+        }
         $professor->delete();
-        return response()->json($professor);
+
+
+        $professors=Professor::get();
+        $array=[];
+        foreach($professors as $professor){
+            $array[]=[
+                'id'=>$professor->id,
+                'name'=>$professor->name,
+                'surname'=>$professor->surname,
+                'dni'=>$professor->dni,
+                'address'=>$professor->address,
+                'phone'=>$professor->phone,
+                'email'=>$professor->email,
+                'courses'=>$professor->courses,
+            ];
+        }
+        return response()->json($array);
     }
 
     public function login(Request $request){
